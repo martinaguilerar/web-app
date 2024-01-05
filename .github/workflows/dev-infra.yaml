@@ -1,6 +1,7 @@
 name: Build DEV environment with Terraform
 
 on: 
+  push:
   pull_request:
     branches:
       - '*'
