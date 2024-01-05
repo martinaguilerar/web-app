@@ -140,6 +140,7 @@ jobs:
       uses: actions/download-artifact@v3
       with:
         name: tfplan
+        path: dev/terraform/.
 
     # Print files
     - name: Check Files
