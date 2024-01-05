@@ -141,6 +141,12 @@ jobs:
       with:
         name: tfplan
 
+    # Print files
+    - name: Check Files
+      run: |
+        ls -R
+        pwd
+    
     # Terraform Apply
     - name: Terraform Apply
       run: terraform apply -auto-approve tfplan
