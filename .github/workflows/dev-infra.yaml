@@ -9,6 +9,10 @@ on:
       - edited
   workflow_dispatch:
 
+permissions:
+  issues: write
+  pull-requests: write
+
 env:
   TF_VAR_azure_client_id: "${{ secrets.TF_VAR_AZURE_CLIENT_ID }}"
   TF_VAR_azure_subscription_id: "${{ secrets.TF_VAR_AZURE_SUBSCRIPTION_ID }}"
