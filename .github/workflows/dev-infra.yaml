@@ -26,8 +26,8 @@ jobs:
     # Checkout the repository to the GitHub Actions runner
     - name: Checkout
       uses: actions/checkout@v3
-        with:
-          sparse-checkout: 'dev/terraform'
+      with:
+        sparse-checkout: 'dev/terraform'
 
     # Install the latest version of the Terraform CLI
     - name: Setup Terraform
