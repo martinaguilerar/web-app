@@ -68,6 +68,18 @@ jobs:
         else 
           exit 0
         fi
+    
+    # Print files
+    - name: Check Files
+      run: |
+        ls -ltrh
+
+    # Save plan to artifacts  
+    - name: Publish Terraform Plan
+      uses: actions/upload-artifact@v3
+      with:
+        name: tfplan
+        path: tfplan
         
     # Create string output of Terraform Plan
     - name: Create String Output
