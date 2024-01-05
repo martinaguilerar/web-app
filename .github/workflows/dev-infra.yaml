@@ -96,6 +96,16 @@ jobs:
       run: |
         echo "$SUMMARY" >> $GITHUB_STEP_SUMMARY
       
+    - name: Push Terraform Output to PR
+      if: github.ref != 'refs/heads/main'
+      uses: mshick/add-pr-comment@v2
+      env:
+        SUMMARY: "${{ steps.tf-plan-string.outputs.summary }}"
+      with:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          message: |
+            `${process.env.SUMMARY}`
+
     # If this is a PR post the changes
     - name: Push Terraform Output to PR
       if: github.ref != 'refs/heads/main'
