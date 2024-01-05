@@ -12,7 +12,7 @@ env:
   azure_client_id: "${{ secrets.TF_VAR_AZURE_CLIENT_ID }}"
   azure_subscription_id: "${{ secrets.TF_VAR_AZURE_SUBSCRIPTION_ID }}"
   azure_tenant_id: "${{ secrets.TF_VAR_AZURE_TENANT_ID }}"
-  azure_client_secret: "${{ secrets.TF_VAR_TF_VAR_AZURE_CLIENT_SECRET }}"
+  azure_client_secret: "${{ secrets.TF_VAR_AZURE_CLIENT_SECRET }}"
 
 jobs:
   terraform-plan:
