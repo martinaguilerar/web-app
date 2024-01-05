@@ -73,13 +73,14 @@ jobs:
     - name: Check Files
       run: |
         ls -ltrh
+        pwd
 
     # Save plan to artifacts  
     - name: Publish Terraform Plan
       uses: actions/upload-artifact@v3
       with:
         name: tfplan
-        path: tfplan
+        path: dev/terraform/tfplan
         
     # Create string output of Terraform Plan
     - name: Create String Output
