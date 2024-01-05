@@ -69,13 +69,6 @@ jobs:
           exit 0
         fi
         
-    # Save plan to artifacts  
-    - name: Publish Terraform Plan
-      uses: actions/upload-artifact@v3
-      with:
-        name: tfplan
-        path: tfplan
-        
     # Create string output of Terraform Plan
     - name: Create String Output
       id: tf-plan-string
@@ -105,7 +98,6 @@ jobs:
       if: github.ref != 'refs/heads/main'
       uses: mshick/add-pr-comment@v2
       with:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           message: "${{ steps.tf-plan-string.outputs.summary }}"
 
   terraform-apply:
