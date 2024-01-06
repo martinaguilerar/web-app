@@ -4,13 +4,6 @@ terraform {
       source = "hashicorp/azurerm"
     }
   }
-
-  backend "azurerm" {
-    resource_group_name  = "app-service-rg-dev"
-    storage_account_name = "maar1-web.dev.terraform.tfstate"
-    container_name       = "tfstate"
-    key                  = "dev.terraform.tfstate"
-  }
 }
 
 provider "azurerm" {
