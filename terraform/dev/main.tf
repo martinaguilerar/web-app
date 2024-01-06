@@ -4,6 +4,10 @@ terraform {
       source = "hashicorp/azurerm"
     }
   }
+
+  backend "azurerm" {
+    key = "dev.terraform.tfstate"
+  }
 }
 
 provider "azurerm" {
