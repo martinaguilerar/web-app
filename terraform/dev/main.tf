@@ -94,13 +94,13 @@ resource "azurerm_linux_web_app_slot" "app_service_slot_dev" {
   name           = "dev"
   app_service_id = azurerm_linux_web_app.azurerm_linux_webapp.id
   identity {
-      type = "SystemAssigned"
+    type = "SystemAssigned"
   }
 
   app_settings = {
-    "sa_container_name"  = "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.keyvault_secret_container_name.versionless_id})",
-    "sa_account_name"  = "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.keyvault_secret_account_name.versionless_id})",
-    "sa_sas" = "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.keyvault_secret_sas.versionless_id})"
+    "sa_container_name" = "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.keyvault_secret_container_name.versionless_id})",
+    "sa_account_name"   = "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.keyvault_secret_account_name.versionless_id})",
+    "sa_sas"            = "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.keyvault_secret_sas.versionless_id})"
   }
 
   site_config {
