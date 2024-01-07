@@ -4,7 +4,9 @@ const hostname = 'localhost';
 const port = 8080;
 
 const server = http.createServer((req, res) => {
-  res.status(200).sendFile(path.join(__dirname, '/index.html'));
+  res.statusCode = 200;
+  res.setHeader('Content-Type', 'text/plain');
+  res.end('Hello World!\n');
 });
 
 server.listen(port, hostname, () => {
