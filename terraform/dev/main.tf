@@ -98,9 +98,9 @@ resource "azurerm_linux_web_app_slot" "app_service_slot_dev" {
   }
 
   app_settings = {
-    "sa_container_name" = "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.keyvault_secret_container_name.versionless_id})",
-    "sa_account_name"   = "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.keyvault_secret_account_name.versionless_id})",
-    "sa_sas"            = "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.keyvault_secret_sas.versionless_id})"
+    "sa_container_name" = "@Microsoft.KeyVault(VaultName=${azurerm_key_vault.azurerm_keyvault.name};SecretName=${azurerm_key_vault_secret.keyvault_secret_container_name.name})",
+    "sa_account_name"   = "@Microsoft.KeyVault(VaultName=${azurerm_key_vault.azurerm_keyvault.name};SecretName=${azurerm_key_vault_secret.keyvault_secret_account_name.name})",
+    "sa_sas"            = "@Microsoft.KeyVault(VaultName=${azurerm_key_vault.azurerm_keyvault.name};SecretName=${azurerm_key_vault_secret.keyvault_secret_sas.name})",
   }
 
   site_config {
