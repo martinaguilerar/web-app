@@ -17,4 +17,6 @@ app.listen(8080, () => {
 });
 
 app.get("/", async (req, res) => {
-  });
+  response.write("<h1>Hello</h1>");
+  response.send();
+});
