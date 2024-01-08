@@ -1,11 +1,11 @@
-name: Build DEV environment with Terraform
+name: Build PROD environment with Terraform
 
 on:
   push:
     branches:
-    - main 
+    - main
     paths:
-    - 'terraform/dev/**'
+    - 'terraform/prod/**'
     - 'src/**'
     - './*.js'
     - './*.json'
@@ -38,7 +38,7 @@ jobs:
       tfplanExitCode: ${{ steps.tf-plan.outputs.exitcode }}
     defaults:
       run:
-        working-directory: "terraform/dev"
+        working-directory: "terraform/prod"
 
     steps:
     # Checkout the repository to the GitHub Actions runner
@@ -82,7 +82,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: tfplan
-        path: terraform/dev/tfplan
+        path: terraform/prod/tfplan
         
     # Create string output of Terraform Plan
     - name: Create String Output
@@ -92,7 +92,7 @@ jobs:
         
         delimiter="$(openssl rand -hex 8)"
         echo "summary<<${delimiter}" >> $GITHUB_OUTPUT
-        echo "## Terraform Plan Output DEV" >> $GITHUB_OUTPUT
+        echo "## Terraform Plan Output PROD" >> $GITHUB_OUTPUT
         echo "<details><summary>Click to expand</summary>" >> $GITHUB_OUTPUT
         echo "" >> $GITHUB_OUTPUT
         echo '```terraform' >> $GITHUB_OUTPUT
@@ -115,7 +115,7 @@ jobs:
       with:
         message: "${{ steps.tf-plan-string.outputs.summary }}"
         allow-repeats: true
-        message-id: "plan-dev"
+        message-id: "plan-prod"
 
   terraform-apply:
     name: 'Terraform Apply'
@@ -125,7 +125,7 @@ jobs:
     needs: [terraform-plan]
     defaults:
       run:
-        working-directory: "terraform/dev"
+        working-directory: "terraform/prod"
 
     steps:
     # Checkout the repository to the GitHub Actions runner
@@ -145,7 +145,19 @@ jobs:
       uses: actions/download-artifact@v3
       with:
         name: tfplan
-        path: terraform/dev/.
+        path: terraform/qa/.
+    
+    # A manual approval will be needed for applying Terraform changes
+    - name: Approve Terraform apply
+      uses: trstringer/manual-approval@v1
+      with:
+        secret: ${{ secrets.GH_TOKEN }}
+        approvers: martinaguilerar
+        minimum-approvals: 1
+        issue-title: "Applying Terraform changes into PROD environment"
+        issue-body: "Please approve or deny the application of Terraform changes into PROD environment"
+        exclude-workflow-initiator-as-approver: false
+
     # Terraform Apply
     - name: Terraform Apply
       run: terraform apply -auto-approve tfplan
@@ -188,11 +200,21 @@ jobs:
       with:
         name: node-app
     
+    - name: Approve Web App Deployment to PROD
+      uses: trstringer/manual-approval@v1
+      with:
+        secret: ${{ secrets.GH_TOKEN }}
+        approvers: martinaguilerar
+        minimum-approvals: 1
+        issue-title: "Deploying Web App to PROD Environment"
+        issue-body: "Please approve or deny the deployment of Web App to PROD Environment"
+        exclude-workflow-initiator-as-approver: false
+    
     - name: 'Deploy to Azure Web App'
       id: deploy-to-webapp
       uses: azure/webapps-deploy@v2
       with:
         app-name: 'mywebapp-maar'
-        slot-name: 'dev'
-        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE_DEV }}
+        slot-name: 'Production'
+        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE_PROD }}
         package: .
