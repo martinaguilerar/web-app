@@ -145,7 +145,7 @@ jobs:
       uses: actions/download-artifact@v3
       with:
         name: tfplan
-        path: terraform/qa/.
+        path: terraform/prod/.
     
     # A manual approval will be needed for applying Terraform changes
     - name: Approve Terraform apply
