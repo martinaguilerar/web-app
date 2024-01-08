@@ -130,4 +130,4 @@ dist
 .pnp.*
 
 # Terraform
-terraform/dev/.terraform*
+terraform/*/.terraform*
