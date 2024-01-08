@@ -115,6 +115,7 @@ jobs:
       with:
         message: "${{ steps.tf-plan-string.outputs.summary }}"
         allow-repeats: true
+        message-id: "plan-prod"
 
   terraform-apply:
     name: 'Terraform Apply'
