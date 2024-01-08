@@ -60,16 +60,6 @@ jobs:
     - name: Terraform Format
       run: terraform fmt -check
 
-    - name: Approve Web App Deployment to QA
-      uses: trstringer/manual-approval@v1
-      with:
-        secret: ${{ secrets.GH_TOKEN }}
-        approvers: martinaguilerar
-        minimum-approvals: 1
-        issue-title: "Deploying Web App to QA Environment"
-        issue-body: "Please approve or deny the deployment of Web App to QA Environment"
-        exclude-workflow-initiator-as-approver: false
-
     # Generates an execution plan for Terraform
     # An exit code of 0 indicated no changes, 1 a terraform failure, 2 there are pending changes.
     - name: Terraform Plan
