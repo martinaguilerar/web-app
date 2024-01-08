@@ -184,7 +184,9 @@ jobs:
   deploy-app:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main' && needs.build-app.outputs.buildAppExitCode == 2
-    needs: [build-app]
+    needs:
+      - build-app
+      - terraform-apply
     
     steps:
     - name: 'Deploy to Azure Web App'
