@@ -72,6 +72,7 @@ GitHub Actions workflows use secrets for sensitive information. The following se
 - TF_VAR_AZURE_CLIENT_SECRET
 - AZURE_WEBAPP_PUBLISH_PROFILE_DEV
 - AZURE_WEBAPP_PUBLISH_PROFILE_QA
+- AZURE_WEBAPP_PUBLISH_PROFILE_PROD
 
 ## Future Improvements
 Since this was just a short practical exercise, there's a lot to improve for the whole project if this were a production project and there was more time for deployment:
