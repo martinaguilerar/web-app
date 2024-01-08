@@ -34,9 +34,9 @@ Filename: [.github/workflows/prod-infra.yaml](./.github/workflows/prod-infra.yam
 
 ## Infrastructure Deployment
 The Terraform configurations in the terraform directory define Azure resources such as Storage Accounts, Web Apps, and Key Vaults. Each environment (Dev, QA, Prod) has its own set of configurations. These are the steps to deploy a change to the infrastructure:
-1. Create a new branch and push a commit with the changes to the Terraform files inside the corresponding environment directory
-2. Create a pull request with the changes
-3. Once the pull request is created, the workflow will identify which files were modified and, depending on that, will run any of the Github Actions workflow. For the pull request only the Terraform Plan steps will run, no apply, no matter which environment
+1. Create a new branch and push a commit with the changes to the Terraform files inside the corresponding environment directory.
+2. Create a pull request with the changes.
+3. Once the pull request is created, the workflow will identify which files were modified and, depending on that, will run any of the Github Actions workflow. For the pull request only the Terraform Plan steps will run, no apply, no matter which environment. Once the Terraform Plan is finished, the output will be published as a comment in the pull request.
 4. Get the necessary approvals for your pull request and, if everything looks good, merge it to main.
 5. Once the pull request is merged, the workflow will run again but this time the Terraform apply for environments QA and PROD will ask for manual approval. After the approval, the deployment will run.
 
@@ -48,8 +48,8 @@ For deployment to QA and PROD, there will be a manual approval needed for terraf
 ## Application Deployment
 The application consists of a simple NodeJS web app inside index.js. For the application deployment, the process is very similar to the infrastructure deployment:
 
-1. Create a new branch and push a commit with the changes to the NodeJS files
-2. Create a pull request with the changes
+1. Create a new branch and push a commit with the changes to the NodeJS files.
+2. Create a pull request with the changes.
 3. Once the pull request is created, the workflow will identify which files were modified and, depending on that, will run any of the Github Actions workflow. For the pull request only NodeJS Build steps will run, no web app deployment, no matter which environment.
 4. Get the necessary approvals for your pull request and. If everything looks good, merge it to main.
 5. Once the pull request is merged, the workflow will run again but this time the Application Deployment for environments QA and PROD will ask for manual approval. After the approval, the deployment will run.
