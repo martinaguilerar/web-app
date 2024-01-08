@@ -157,8 +157,6 @@ jobs:
 
   build-app:
     runs-on: ubuntu-latest
-    outputs:
-      buildAppExitCode: ${{ steps.build-app.outputs.exitcode }}
     steps:
       - uses: actions/checkout@v2
 
@@ -169,24 +167,14 @@ jobs:
 
       - name: npm install, build, and test
         run: |
-          export exitcode=0
-          npm install && npm run build --if-present || export exitcode=$?
-
-          echo "exitcode=$exitcode" >> $GITHUB_OUTPUT
-          
-          if [ $exitcode -eq 1 ]; then
-            echo Build App Failed!
-            exit 1
-          else 
-            exit 0
-          fi
+          npm install
+          npm run build --if-present 
 
   deploy-app:
     runs-on: ubuntu-latest
-    if: ${{ always() }} && needs.build-app.outputs.buildAppExitCode == 2 && github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main'
     needs:
       - build-app
-      - terraform-apply
     
     steps:
     - name: 'Deploy to Azure Web App'
