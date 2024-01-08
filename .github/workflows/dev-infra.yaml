@@ -71,12 +71,6 @@ jobs:
         else 
           exit 0
         fi
-    
-    # Print files
-    - name: Check Files
-      run: |
-        ls -ltrh
-        pwd
 
     # Save plan to artifacts  
     - name: Publish Terraform Plan
@@ -144,12 +138,6 @@ jobs:
       with:
         name: tfplan
         path: terraform/dev/.
-
-    # Print files
-    - name: Check Files
-      run: |
-        ls -R
-        pwd
     
     # Terraform Apply
     - name: Terraform Apply
@@ -178,7 +166,7 @@ jobs:
 
   deploy-app:
     runs-on: ubuntu-latest
-    if: always()
+    if: always() && github.ref == 'refs/heads/main'
     needs:
       - build-app
 
@@ -187,10 +175,6 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: node-app
-    
-    - name: Show Files
-      run: |
-        ls -R
     
     - name: 'Deploy to Azure Web App'
       id: deploy-to-webapp
