@@ -172,11 +172,15 @@ jobs:
 
   deploy-app:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
+    if: always() && github.ref == 'refs/heads/main'
     needs:
       - build-app
     
     steps:
+    - name: Show Files
+      run: |
+        ls -R
+    
     - name: 'Deploy to Azure Web App'
       id: deploy-to-webapp
       uses: azure/webapps-deploy@v2
