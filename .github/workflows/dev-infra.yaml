@@ -170,13 +170,24 @@ jobs:
           npm install
           npm run build --if-present 
 
+      - name: Upload artifact for deployment job
+        uses: actions/upload-artifact@v2
+        with:
+          name: node-app
+          path: .
+
   deploy-app:
     runs-on: ubuntu-latest
     if: always()
     needs:
       - build-app
-    
+
     steps:
+    - name: Download artifact from build job
+      uses: actions/download-artifact@v2
+      with:
+        name: node-app
+    
     - name: Show Files
       run: |
         ls -R
