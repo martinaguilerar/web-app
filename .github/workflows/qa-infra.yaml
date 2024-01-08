@@ -4,6 +4,11 @@ on:
   push:
     branches:
     - main
+    paths:
+    - 'terraform/qa/**'
+    - 'src/**'
+    - './*.js'
+    - './*.json'
   pull_request:
     branches:
     - main
@@ -139,6 +144,16 @@ jobs:
         name: tfplan
         path: terraform/qa/.
     
+    - name: Approve Terraform apply
+      uses: trstringer/manual-approval@v1
+      with:
+        secret: ${{ secrets.GH_TOKEN }}
+        approvers: martinaguilerar
+        minimum-approvals: 1
+        issue-title: "Applying Terraform changes into QA environment"
+        issue-body: "Please approve or deny the application of Terraform changes into QA environment"
+        exclude-workflow-initiator-as-approver: false
+
     # Terraform Apply
     - name: Terraform Apply
       run: terraform apply -auto-approve tfplan
@@ -175,6 +190,16 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: node-app
+    
+    - name: Approve Web App Deployment to QA
+      uses: trstringer/manual-approval@v1
+      with:
+        secret: ${{ secrets.GH_TOKEN }}
+        approvers: martinaguilerar
+        minimum-approvals: 1
+        issue-title: "Deploying Web App to QA Environment"
+        issue-body: "Please approve or deny the deployment of Web App to QA Environment"
+        exclude-workflow-initiator-as-approver: false
     
     - name: 'Deploy to Azure Web App'
       id: deploy-to-webapp
