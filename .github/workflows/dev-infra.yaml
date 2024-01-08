@@ -172,7 +172,7 @@ jobs:
 
   deploy-app:
     runs-on: ubuntu-latest
-    if: always() && github.ref == 'refs/heads/main'
+    if: always()
     needs:
       - build-app
     
